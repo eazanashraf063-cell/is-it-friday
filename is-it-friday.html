@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is It Friday?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --no-red: #ff0044;
+            --yes-green: #00ff88;
+            --bg-color: #000;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.8s ease;
+            overflow: hidden;
+        }
+
+        #answer {
+            font-size: clamp(8rem, 45vw, 30rem);
+            line-height: 0.8;
+            margin: 0;
+            letter-spacing: -10px;
+            user-select: none;
+            font-weight: 900;
+        }
+
+        #timer-container {
+            margin-top: 30px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        #timer {
+            font-size: 1.6rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .ms {
+            font-size: 1.1rem;
+            opacity: 0.4;
+        }
+
+        /* --- FRIDAY CELEBRATION --- */
+        .is-friday {
+            background-color: var(--yes-green) !important;
+            color: #000 !important;
+        }
+        
+        .is-friday #answer {
+            animation: bounce 0.4s infinite alternate ease-in-out;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="answer">...</div>
+
+    <div id="timer-container">
+        <div class="label" id="status-label">Waiting for the weekend</div>
+        <div id="timer">00d : 00h : 00m : 00s <span class="ms">.000</span></div>
+    </div>
+
+    <script>
+        function updateApp() {
+            const now = new Date();
+            const day = now.getDay(); // 0: Sun, 5: Fri
+            const answerEl = document.getElementById('answer');
+            const timerEl = document.getElementById('timer');
+            const labelEl = document.getElementById('status-label');
+
+            if (day === 5) {
+                // IT IS FRIDAY
+                document.body.classList.add('is-friday');
+                answerEl.innerText = "YES";
+                labelEl.innerText = "The Only Day That Matters";
+                timerEl.innerText = "IT IS FINALLY FRIDAY";
+            } else {
+                // IT IS NOT FRIDAY
+                document.body.classList.remove('is-friday');
+                answerEl.innerText = "NO";
+                labelEl.innerText = "Countdown to the Weekend";
+
+                // Target: The upcoming Friday at 00:00:00
+                let nextFriday = new Date();
+                let daysUntilFriday = (5 - day + 7) % 7;
+                
+                // If it's Saturday (6), Sunday (0), etc., it finds the next Friday
+                if (daysUntilFriday === 0 && day !== 5) daysUntilFriday = 7; 
+                
+                nextFriday.setDate(now.getDate() + daysUntilFriday);
+                nextFriday.setHours(0, 0, 0, 0);
+
+                const diff = nextFriday - now;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / 1000 / 60) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+                const ms = Math.floor(diff % 1000);
+
+                timerEl.innerHTML = `
+                    ${d}d : ${h.toString().padStart(2, '0')}h : 
+                    ${m.toString().padStart(2, '0')}m : 
+                    ${s.toString().padStart(2, '0')}s 
+                    <span class="ms">.${ms.toString().padStart(3, '0')}</span>
+                `;
+
+                // Background Heat Map (Red Intensifies)
+                // Range is always 7 days since Friday is the only weekend
+                const maxDiff = 7 * 24 * 60 * 60 * 1000; 
+                const closeness = 1 - (diff / maxDiff);
+                const lightness = Math.floor(closeness * 35); 
+                document.body.style.backgroundColor = `hsl(345, 100%, ${lightness}%)`;
+            }
+            
+            requestAnimationFrame(updateApp);
+        }
+
+        updateApp();
+    </script>
+</body>
+</html>
