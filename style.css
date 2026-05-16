@@ -1,3 +1,10 @@
+/* TROUBLESHOOTING: 
+   If your CSS isn't showing up on your site:
+   1. Ensure index.html has: <link rel="stylesheet" href="style.css">
+   2. Ensure style.css and index.html are in the SAME folder on GitHub.
+   3. On your browser, press Ctrl+F5 (Windows) or Cmd+Shift+R (Mac) to clear the cache.
+*/
+
 /* --- BASE STYLES --- */
 html { 
     scroll-padding-top: 100px; 
@@ -23,23 +30,19 @@ body {
 
 .logo-box {
     position: relative;
-    width: 160px; /* Slimmed down width */
+    width: 160px; 
     height: 64px;
     overflow: hidden; 
 }
 
 .main-logo {
     position: absolute;
-    /* ----------------------------------------------------------- */
-    /* ADJUST DESKTOP LOGO SIZE HERE                               */
-    /* I reduced this to 200px to make it sit better in the bar    */
-    /* ----------------------------------------------------------- */
+    /* EDIT HEIGHT BELOW TO ADJUST LOGO SIZE */
     height: 200px; 
     width: auto;
     max-width: none;
     top: 50%;
     left: 50%;
-    /* Centering logic */
     transform: translate(-50%, -50%); 
     mix-blend-mode: multiply; 
     pointer-events: none;
@@ -49,9 +52,6 @@ body {
 @media (max-width: 640px) {
     .navbar, .nav-container, .logo-box { height: 56px !important; }
     .main-logo { 
-        /* ----------------------------------------------------------- */
-        /* ADJUST MOBILE LOGO SIZE HERE                                */
-        /* ----------------------------------------------------------- */
         height: 160px; 
         transform: translate(-50%, -50%); 
     }
