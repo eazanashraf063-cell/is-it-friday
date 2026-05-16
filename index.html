@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HUDY Travels | Hudha</title>
     
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Tailwind Script -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         petal: '#fdf2f0',
-                        petalDeep: '#fae3e0',
                         brandPink: '#e8a9a2',
                         brandBlue: '#2c3e50',
                     },
@@ -32,97 +32,120 @@
     </script>
 
     <style>
-        html {
-            scroll-padding-top: 100px; 
-        }
-
+        /* --- INTEGRATED STYLES --- */
+        html { scroll-padding-top: 100px; }
         body { background-color: #ffffff; color: #4a4a4a; }
-        
-        .fade-in { animation: fadeIn 1.5s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* THE CROPPING & BLENDING ENGINE */
-        nav {
-            height: 64px !important; 
-            overflow: visible; 
+        /* --- LOGO ENGINE --- */
+        .navbar {
+            height: 64px !important;
             background-color: #ffffff;
         }
-
         .nav-container {
             height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
         }
-
         .logo-box {
             position: relative;
             width: 180px; 
             height: 64px;
-            display: flex;
-            align-items: center;
             overflow: hidden; 
         }
-
         .main-logo {
             position: absolute;
-            height: 420px; /* Zoom level */
+            height: 420px; 
             width: auto;
             max-width: none;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -49%); 
-            /* BLEND MODE: This removes the light grey/off-white background */
             mix-blend-mode: multiply; 
             pointer-events: none;
         }
 
         @media (max-width: 640px) {
-            nav, .nav-container, .logo-box { height: 56px !important; }
+            .navbar, .nav-container, .logo-box { height: 56px !important; }
             .main-logo { height: 340px; transform: translate(-50%, -48.5%); }
             .logo-box { width: 140px; }
         }
 
-        .destination-card {
-            min-width: 280px;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        /* --- NAVIGATION & BUTTONS --- */
+        .nav-link {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        .destination-card:hover { transform: translateY(-5px); }
-        
-        @media (min-width: 768px) {
-            .destination-card { min-width: 380px; }
+        .nav-link:hover { color: #e8a9a2; }
+
+        .btn-inquire {
+            background-color: #e8a9a2;
+            color: white !important;
+            padding: 0.8rem 2rem;
+            border-radius: 9999px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-inquire:hover { background-color: #2c3e50; transform: scale(1.05); }
+
+        /* --- CONTACT ICONS --- */
+        .contact-icon-link {
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-icon-link:hover {
+            color: #e8a9a2;
+            transform: translateY(-5px);
         }
 
-        .pink-gradient {
-            background: linear-gradient(to bottom, #ffffff, #fdf2f0);
+        /* --- UI ELEMENTS --- */
+        .pink-gradient { background: linear-gradient(to bottom, #ffffff, #fdf2f0); }
+        .fade-in { animation: fadeIn 1.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .destination-card { min-width: 280px; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card-image-wrapper {
+            aspect-ratio: 4/5;
+            background-color: #fdf2f0;
+            overflow: hidden;
+            border-radius: 1rem;
+            position: relative;
+        }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+        .destination-card:hover .card-img { transform: scale(1.1); }
+
+        .about-frame { position: absolute; inset: -1rem; border: 1px solid rgba(232, 169, 162, 0.3); border-radius: 1rem; }
+        .about-image { width: 100%; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .footer-text { font-size: 9px; color: #d1d5db; text-transform: uppercase; letter-spacing: 0.5em; }
     </style>
 </head>
 <body class="font-sans antialiased">
 
     <!-- Header -->
-    <nav class="bg-white sticky top-0 z-50 border-b border-petal px-8">
+    <nav class="navbar sticky top-0 z-50 border-b border-petal px-8">
         <div class="max-w-6xl mx-auto nav-container">
-            
-            <!-- LOGO SECTION -->
             <a href="#" class="logo-box">
-                <img src="HudyTravels.svg" 
-                     alt="HUDY Travels Logo" 
-                     class="main-logo">
+                <img src="HudyTravels.svg" alt="HUDY Travels Logo" class="main-logo">
             </a>
-
-            <!-- NAV LINKS -->
             <div class="hidden md:flex gap-10 items-center">
-                <a href="#destinations" class="text-[10px] uppercase tracking-[0.2em] hover:text-brandPink transition-colors font-medium">Destinations</a>
-                <a href="#about" class="text-[10px] uppercase tracking-[0.2em] hover:text-brandPink transition-colors font-medium">About</a>
-                <a href="mailto:hello@hudytravels.com" class="bg-brandPink text-white px-6 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-brandBlue transition-all shadow-sm">Inquire</a>
+                <a href="#destinations" class="nav-link">Destinations</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="btn-inquire">Inquire</a>
             </div>
         </div>
     </nav>
@@ -140,7 +163,7 @@
         </div>
     </section>
 
-    <!-- Destination Carousel -->
+    <!-- Destinations -->
     <section id="destinations" class="py-20 overflow-hidden bg-white">
         <div class="px-8 max-w-6xl mx-auto mb-10 flex justify-between items-end">
             <div>
@@ -152,8 +175,8 @@
         
         <div class="flex overflow-x-auto gap-8 px-8 no-scrollbar snap-x snap-mandatory">
             <div class="destination-card snap-center group cursor-pointer">
-                <div class="aspect-[4/5] bg-petal overflow-hidden rounded-2xl relative shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80" alt="Maldives" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80" alt="Maldives" class="card-img">
                 </div>
                 <div class="mt-6 flex justify-between items-center">
                     <p class="font-serif text-xl text-brandBlue">Maldives</p>
@@ -163,8 +186,8 @@
             </div>
 
             <div class="destination-card snap-center group cursor-pointer">
-                <div class="aspect-[4/5] bg-petal overflow-hidden rounded-2xl relative shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                <div class="card-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai" class="card-img">
                 </div>
                 <div class="mt-6 flex justify-between items-center">
                     <p class="font-serif text-xl text-brandBlue">Dubai</p>
@@ -172,31 +195,20 @@
                 </div>
                 <p class="text-[10px] uppercase tracking-widest text-brandPink mt-1">Urban Glamour</p>
             </div>
-
-            <div class="destination-card snap-center group cursor-pointer">
-                <div class="aspect-[4/5] bg-petal overflow-hidden rounded-2xl relative shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80" alt="Japan" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                </div>
-                <div class="mt-6 flex justify-between items-center">
-                    <p class="font-serif text-xl text-brandBlue">Japan</p>
-                    <div class="h-[1px] w-8 bg-brandPink/30"></div>
-                </div>
-                <p class="text-[10px] uppercase tracking-widest text-brandPink mt-1">Ethereal Beauty</p>
-            </div>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About -->
     <section id="about" class="py-24 px-8 bg-white">
         <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-20 items-center">
             <div class="relative">
-                <div class="absolute -inset-4 border border-brandPink/30 rounded-2xl transform translate-x-4 translate-y-4 -z-10"></div>
-                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Hudha" class="w-full rounded-2xl shadow-xl filter saturate-[0.8] sepia-[0.1]">
+                <div class="about-frame transform translate-x-4 translate-y-4 -z-10"></div>
+                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Hudha" class="about-image">
             </div>
             <div>
                 <span class="text-brandPink text-[10px] uppercase tracking-widest block mb-4 font-bold italic">The Curator</span>
                 <h2 class="font-serif text-4xl text-brandBlue mb-6">Hello, I'm Hudha.</h2>
-                <p class="text-gray-500 font-light leading-relaxed mb-8">
+                <p class="about-text mb-8 text-gray-500 font-light">
                     Travel should be a feeling, not just a flight. I believe luxury is the peace of mind that comes when every detail has already been taken care of.
                 </p>
                 <div class="font-serif italic text-brandPink text-xl font-bold">— Hudha</div>
@@ -204,11 +216,37 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-8 text-center bg-petal/20 border-t border-petal">
+        <div class="max-w-xl mx-auto">
+            <h3 class="font-serif text-3xl mb-4 text-brandBlue">Ready for your escape?</h3>
+            <p class="text-gray-400 font-light text-sm mb-10 italic">Let's start planning your next journey together.</p>
+            
+            <div class="flex flex-col gap-10 items-center mt-12">
+                <a href="mailto:hello@hudytravels.com" class="btn-inquire !px-16 !py-5 !text-xs shadow-lg">
+                    Inquire via Email
+                </a>
+                
+                <div class="flex gap-12">
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/yournumber" target="_blank" class="contact-icon-link">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    </a>
+                    <!-- Telegram -->
+                    <a href="https://t.me/yourusername" target="_blank" class="contact-icon-link">
+                        <i class="fa-brands fa-telegram text-2xl"></i>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/yourprofile" target="_blank" class="contact-icon-link">
+                        <i class="fa-brands fa-instagram text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="py-12 bg-white text-center border-t border-petal">
-        <p class="text-[9px] text-gray-300 uppercase tracking-[0.5em] font-medium">
-            &copy; 2024 HUDY Travels &bull; Designed for you.
-        </p>
+        <p class="footer-text">&copy; 2024 HUDY Travels &bull; Designed for you.</p>
     </footer>
 
 </body>
