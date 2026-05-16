@@ -7,7 +7,7 @@
 
 /* --- BASE STYLES --- */
 html { 
-    scroll-padding-top: 100px; 
+    scroll-padding-top: 120px; /* Increased to account for taller navbar */
 }
 
 body { 
@@ -17,12 +17,14 @@ body {
 
 /* --- LOGO & NAVBAR ENGINE --- */
 .navbar {
-    height: 64px !important;
+    /* INCREASED HEIGHT: Changed from 64px to 100px */
+    height: 100px !important;
     background-color: #ffffff;
 }
 
 .nav-container {
-    height: 64px;
+    /* MATCH NAVBAR HEIGHT */
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,15 +32,15 @@ body {
 
 .logo-box {
     position: relative;
-    width: 160px; 
-    height: 64px;
+    width: 200px; 
+    height: 100px; /* MATCH NAVBAR HEIGHT */
     overflow: hidden; 
 }
 
 .main-logo {
     position: absolute;
-    /* EDIT HEIGHT BELOW TO ADJUST LOGO SIZE */
-    height: 200px; 
+    /* Adjusted logo size to fit the new taller bar */
+    height: 320px; 
     width: auto;
     max-width: none;
     top: 50%;
@@ -50,12 +52,13 @@ body {
 
 /* Mobile Logo Adjustments */
 @media (max-width: 640px) {
-    .navbar, .nav-container, .logo-box { height: 56px !important; }
+    /* Mobile height increased from 56px to 80px */
+    .navbar, .nav-container, .logo-box { height: 80px !important; }
     .main-logo { 
-        height: 160px; 
+        height: 240px; 
         transform: translate(-50%, -50%); 
     }
-    .logo-box { width: 120px; }
+    .logo-box { width: 160px; }
 }
 
 /* --- NAVIGATION LINKS --- */
