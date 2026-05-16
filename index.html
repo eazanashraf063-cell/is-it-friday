@@ -32,6 +32,10 @@
     </script>
 
     <style>
+        html {
+            scroll-padding-top: 100px; 
+        }
+
         body { background-color: #ffffff; color: #4a4a4a; }
         
         .fade-in { animation: fadeIn 1.5s ease-out forwards; }
@@ -42,6 +46,48 @@
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* THE CROPPING ENGINE FOR YOUR LOGO */
+        nav {
+            height: 64px !important; 
+            overflow: visible; 
+        }
+
+        .nav-container {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 180px; /* Width of the visible logo area */
+            height: 64px;
+            display: flex;
+            align-items: center;
+            overflow: hidden; /* This crops the massive SVG white space */
+        }
+
+        .main-logo {
+            position: absolute;
+            height: 400px; /* Scale up the art so it's readable */
+            width: auto;
+            max-width: none;
+            top: 50%;
+            left: 50%;
+            /* translate(-50%, -48%) centers the art inside the logo-box */
+            transform: translate(-50%, -48.5%); 
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
+
+        @media (max-width: 640px) {
+            nav, .nav-container, .logo-box { height: 56px !important; }
+            .main-logo { height: 320px; transform: translate(-50%, -48%); }
+            .logo-box { width: 140px; }
+        }
 
         .destination-card {
             min-width: 280px;
@@ -56,59 +102,16 @@
         .pink-gradient {
             background: linear-gradient(to bottom, #ffffff, #fdf2f0);
         }
-        
-        /* THE "FIX" FOR THE TALL HEADER */
-        .nav-bar-slim {
-            height: 60px; /* Forces a slim header */
-            max-height: 60px;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 60px; 
-            width: 160px; 
-            overflow: hidden; /* This hides the "empty space" of the SVG */
-            position: relative;
-        }
-
-        .main-logo {
-            /* We zoom the image and pull it up to ignore the SVG's empty padding */
-            height: 300px; 
-            width: auto;
-            max-width: none;
-            margin-top: -20px; /* Pulls the actual art up into the 60px bar */
-            mix-blend-mode: multiply;
-            transition: transform 0.3s ease;
-        }
-        
-        .logo-wrapper:hover .main-logo {
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 640px) {
-            .nav-bar-slim, .logo-wrapper { height: 50px; }
-            .main-logo { height: 240px; margin-top: -15px; }
-        }
-
-        .contact-btn:hover {
-            background-color: #fdf2f0;
-            color: #e8a9a2;
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body class="font-sans antialiased">
 
     <!-- Header -->
     <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-petal px-8">
-        <div class="max-w-6xl mx-auto nav-bar-slim justify-between">
+        <div class="max-w-6xl mx-auto nav-container">
             
-            <!-- LOGO SECTION -->
-            <a href="#" class="logo-wrapper">
+            <!-- LOGO SECTION (USES YOUR SVG FILE) -->
+            <a href="#" class="logo-box">
                 <img src="HudyTravels.svg" 
                      alt="HUDY Travels Logo" 
                      class="main-logo">
@@ -147,6 +150,7 @@
         </div>
         
         <div class="flex overflow-x-auto gap-8 px-8 no-scrollbar snap-x snap-mandatory">
+            <!-- Maldives Card -->
             <div class="destination-card snap-center group cursor-pointer">
                 <div class="aspect-[4/5] bg-petal overflow-hidden rounded-2xl relative shadow-sm">
                     <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80" alt="Maldives" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
@@ -159,6 +163,7 @@
                 <p class="text-[10px] uppercase tracking-widest text-brandPink mt-1">Secluded Bliss</p>
             </div>
 
+            <!-- Dubai Card -->
             <div class="destination-card snap-center group cursor-pointer">
                 <div class="aspect-[4/5] bg-petal overflow-hidden rounded-2xl relative shadow-sm">
                     <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
@@ -171,6 +176,7 @@
                 <p class="text-[10px] uppercase tracking-widest text-brandPink mt-1">Urban Glamour</p>
             </div>
 
+            <!-- Japan Card -->
             <div class="destination-card snap-center group cursor-pointer">
                 <div class="aspect-[4/5] bg-petal overflow-hidden rounded-2xl relative shadow-sm">
                     <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80" alt="Japan" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
@@ -245,8 +251,8 @@
                     Inquire via Email
                 </a>
                 <div class="flex gap-12">
-                    <a href="#" class="text-brandBlue hover:text-brandPink transition-all"><i class="fa-brands fa-whatsapp text-2xl"></i></a>
-                    <a href="#" class="text-brandBlue hover:text-brandPink transition-all"><i class="fa-brands fa-instagram text-2xl"></i></a>
+                    <a href="https://wa.me/yournumber" class="text-brandBlue hover:text-brandPink transition-all"><i class="fa-brands fa-whatsapp text-2xl"></i></a>
+                    <a href="https://instagram.com/yourprofile" class="text-brandBlue hover:text-brandPink transition-all"><i class="fa-brands fa-instagram text-2xl"></i></a>
                 </div>
             </div>
         </div>
