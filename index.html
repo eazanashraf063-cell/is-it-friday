@@ -67,35 +67,49 @@
             transform: scale(1.1);
         }
 
-        /* Logo specific styling to handle the hat graphic */
+        /* SVG Logo Styling */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            height: 120px; /* Header height */
+            overflow: visible;
+        }
+
         .main-logo {
-            height: 100px; /* Increased size from 60px to 100px */
+            height: 180px; /* Large scale for the SVG */
             width: auto;
             object-fit: contain;
-            /* multiply blend mode removes white background and makes it blend with the page tint */
+            /* Since it's an SVG, we don't need mix-blend-mode anymore, 
+               but it's safe to keep if there are any tiny stray white pixels */
             mix-blend-mode: multiply; 
             transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
         }
+        
         .main-logo:hover {
             transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            .logo-wrapper { height: 100px; }
+            .main-logo { height: 140px; }
         }
     </style>
 </head>
 <body class="font-sans antialiased">
 
     <!-- Header -->
-    <nav class="py-4 px-8 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <nav class="py-2 px-8 bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-petal">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             
             <!-- LOGO SECTION -->
-            <a href="#" class="flex items-center">
-                <!-- Pointing to your uploaded image -->
-                <img src="2026-05-15 13.37.09.jpg" 
+            <a href="#" class="logo-wrapper">
+                <img src="HudyTravels.svg" 
                      alt="HUDY Travels Logo" 
                      class="main-logo"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 
-                <!-- Fallback Text Logo if image fails to load -->
+                <!-- Fallback Text Logo if SVG fails to load -->
                 <div class="hidden flex-col leading-tight">
                     <span class="font-serif text-2xl tracking-[0.2em] uppercase font-bold text-brandBlue">HUDY</span>
                     <span class="text-[10px] tracking-[0.5em] uppercase text-brandPink font-semibold">Travels</span>
