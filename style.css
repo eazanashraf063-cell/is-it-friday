@@ -24,14 +24,14 @@ body {
 .logo-box {
     position: relative;
     width: 180px; 
-    height: 30px;
+    height: 64px;
     overflow: hidden; 
 }
 
 .main-logo {
     position: absolute;
     /* --- EDIT HEIGHT BELOW TO CHANGE LOGO SIZE --- */
-    height: 280px; 
+    height: 180px; 
     width: auto;
     max-width: none;
     top: 50%;
