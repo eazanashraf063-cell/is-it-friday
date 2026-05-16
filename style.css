@@ -18,13 +18,13 @@ body {
 /* --- LOGO & NAVBAR ENGINE --- */
 .navbar {
     /* INCREASED HEIGHT: Changed from 64px to 100px */
-    height: 100px !important;
+    height: 140px !important;
     background-color: #ffffff;
 }
 
 .nav-container {
     /* MATCH NAVBAR HEIGHT */
-    height: 100px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,7 +33,7 @@ body {
 .logo-box {
     position: relative;
     width: 200px; 
-    height: 100px; /* MATCH NAVBAR HEIGHT */
+    height: 140px; /* MATCH NAVBAR HEIGHT */
     overflow: hidden; 
 }
 
