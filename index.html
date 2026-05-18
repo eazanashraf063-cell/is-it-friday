@@ -8,7 +8,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght=300;400;500;600;700&family=Playfair+Display:ital,wght=0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght=0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Tailwind Script -->
@@ -93,7 +93,7 @@
             box-shadow: 0 10px 15px -3px rgba(232, 169, 162, 0.4);
         }
 
-        /* --- UI ELEMENTS --- */
+        /* --- UI ELEMENTS & TRANSITIONS --- */
         .pink-gradient { background: linear-gradient(to bottom, #ffffff, #fdf2f0); }
         .fade-in { animation: fadeIn 1.2s ease-out forwards; }
         @keyframes fadeIn {
@@ -104,7 +104,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* --- DYNAMIC CAROUSEL CARDS --- */
-        .destination-card { min-width: 300px; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+        .destination-card { min-width: 300px; flex: 1; max-width: 380px; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
         .card-image-wrapper {
             aspect-ratio: 4/5;
             background-color: #fdf2f0;
@@ -114,29 +114,6 @@
         }
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s ease; }
         .destination-card:hover .card-img { transform: scale(1.05); }
-
-        /* --- EDITING ENGINE HIGHLIGHTS --- */
-        .curator-active .card-editable-text {
-            border-bottom: 1px dashed #e8a9a2;
-            padding-bottom: 2px;
-            cursor: text;
-        }
-        .curator-active .card-editable-text:focus {
-            outline: none;
-            border-bottom: 2px solid #2c3e50;
-            background-color: #fdf2f0;
-        }
-        .upload-overlay {
-            opacity: 0;
-            transition: opacity 0.3s ease, background-color 0.3s ease;
-        }
-        .curator-active .upload-overlay {
-            opacity: 1;
-            background-color: rgba(44, 62, 80, 0.65);
-        }
-        .curator-active .upload-overlay:hover {
-            background-color: rgba(44, 62, 80, 0.85);
-        }
 
         .about-frame { position: absolute; inset: -1rem; border: 1px solid rgba(232, 169, 162, 0.25); border-radius: 1.5rem; }
         .about-image { width: 100%; border-radius: 1.5rem; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1); }
@@ -184,7 +161,7 @@
         <a href="#destinations" class="mobile-nav-link nav-link text-lg">The Maldives</a>
         <a href="#about" class="mobile-nav-link nav-link text-lg">The Curator</a>
         <a href="#services" class="mobile-nav-link nav-link text-lg">Bespoke Services</a>
-        <a href="#contact" class="mobile-nav-link btn-inquire text-sm tracking-[0.2em]">Plan Your Trip</a>
+        <a href="#contact" class="btn-inquire text-sm tracking-[0.2em]">Plan Your Trip</a>
     </div>
 
     <!-- Hero -->
@@ -209,122 +186,49 @@
             </div>
             
             <div class="flex flex-wrap items-center gap-4">
-                <!-- Curator Edit Action Button -->
-                <button id="toggle-curator-mode" class="flex items-center gap-2 px-4 py-2 border border-brandPink/40 rounded-full text-[11px] uppercase tracking-wider text-brandBlue hover:bg-petal/40 transition font-semibold">
-                    <i class="fa-solid fa-wand-magic-sparkles text-brandPink"></i>
-                    <span>Curate Collection</span>
-                </button>
-                <!-- Code Export Button (visible when edits occur or in Curator Mode) -->
-                <button id="export-code-btn" class="hidden flex items-center gap-2 px-4 py-2 bg-brandBlue text-white rounded-full text-[11px] uppercase tracking-wider hover:bg-brandPink transition font-semibold shadow-sm">
-                    <i class="fa-solid fa-code"></i>
-                    <span>Export Code with Edits</span>
-                </button>
                 <span class="text-[10px] uppercase tracking-widest text-brandPink font-bold hidden sm:inline ml-2">Scroll to view</span>
             </div>
         </div>
 
         <!-- Dynamic Collection Carousel Container -->
-        <div id="carousel-container" class="flex overflow-x-auto gap-10 px-6 md:px-12 no-scrollbar snap-x snap-mandatory">
+        <div id="carousel-container" class="flex overflow-x-auto md:justify-center gap-10 px-6 md:px-12 no-scrollbar snap-x snap-mandatory">
             
             <!-- Experience Card 1 -->
             <div class="destination-card snap-center group cursor-pointer" data-id="card-1">
                 <div class="card-image-wrapper">
                     <img id="img-card-1" src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80" alt="Luxury Resorts Maldives" class="card-img">
-                    <!-- Elegant Custom Upload Overlay (Only visible in edit mode) -->
-                    <div class="upload-overlay absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center pointer-events-none">
-                        <i class="fa-solid fa-camera text-2xl mb-2 text-brandPink"></i>
-                        <span class="text-[10px] uppercase tracking-widest font-bold">Replace Image</span>
-                        <span class="text-[9px] text-petal/90 mt-1 font-semibold bg-brandBlue/50 px-2 py-1 rounded">Size: 800 × 1000px</span>
-                    </div>
-                    <!-- Hidden File Input -->
-                    <input type="file" id="file-card-1" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer hidden z-10">
                 </div>
                 <div class="mt-8 flex justify-between items-center">
-                    <p id="title-card-1" class="font-serif text-2xl text-brandBlue card-editable-text" contenteditable="false">Luxury Resorts</p>
+                    <p id="title-card-1" class="font-serif text-2xl text-brandBlue">Luxury Resorts</p>
                     <div class="h-[1px] w-10 bg-brandPink/30"></div>
                 </div>
-                <p id="subtitle-card-1" class="text-[11px] uppercase tracking-widest text-brandPink mt-2 font-medium card-editable-text" contenteditable="false">Secluded Bliss</p>
+                <p id="subtitle-card-1" class="text-[12px] text-gray-600 leading-relaxed mt-3 font-medium">Secluded Bliss — Private island escapes featuring gorgeous overwater bungalows and personalized luxury care.</p>
             </div>
 
             <!-- Experience Card 2 -->
             <div class="destination-card snap-center group cursor-pointer" data-id="card-2">
                 <div class="card-image-wrapper">
                     <img id="img-card-2" src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=800&q=80" alt="Local Island Stays Maldives" class="card-img">
-                    <!-- Upload Overlay -->
-                    <div class="upload-overlay absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center pointer-events-none">
-                        <i class="fa-solid fa-camera text-2xl mb-2 text-brandPink"></i>
-                        <span class="text-[10px] uppercase tracking-widest font-bold">Replace Image</span>
-                        <span class="text-[9px] text-petal/90 mt-1 font-semibold bg-brandBlue/50 px-2 py-1 rounded">Size: 800 × 1000px</span>
-                    </div>
-                    <!-- Hidden File Input -->
-                    <input type="file" id="file-card-2" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer hidden z-10">
                 </div>
                 <div class="mt-8 flex justify-between items-center">
-                    <p id="title-card-2" class="font-serif text-2xl text-brandBlue card-editable-text" contenteditable="false">Local Islands</p>
+                    <p id="title-card-2" class="font-serif text-2xl text-brandBlue">Local Islands</p>
                     <div class="h-[1px] w-10 bg-brandPink/30"></div>
                 </div>
-                <p id="subtitle-card-2" class="text-[11px] uppercase tracking-widest text-brandPink mt-2 font-medium card-editable-text" contenteditable="false">Authentic Culture</p>
+                <p id="subtitle-card-2" class="text-[12px] text-gray-600 leading-relaxed mt-3 font-medium">Authentic Culture — Experience authentic island hospitality with custom guesthouse packages and cultural warmth.</p>
             </div>
 
             <!-- Experience Card 3 -->
             <div class="destination-card snap-center group cursor-pointer" data-id="card-3">
                 <div class="card-image-wrapper">
-                    <img id="img-card-3" src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=800&q=80" alt="Private Villas Maldives" class="card-img">
-                    <!-- Upload Overlay -->
-                    <div class="upload-overlay absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center pointer-events-none">
-                        <i class="fa-solid fa-camera text-2xl mb-2 text-brandPink"></i>
-                        <span class="text-[10px] uppercase tracking-widest font-bold">Replace Image</span>
-                        <span class="text-[9px] text-petal/90 mt-1 font-semibold bg-brandBlue/50 px-2 py-1 rounded">Size: 800 × 1000px</span>
-                    </div>
-                    <!-- Hidden File Input -->
-                    <input type="file" id="file-card-3" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer hidden z-10">
+                    <img id="img-card-3" src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?auto=format&fit=crop&w=800&q=80" alt="Ocean Excursions Maldives" class="card-img">
                 </div>
                 <div class="mt-8 flex justify-between items-center">
-                    <p id="title-card-3" class="font-serif text-2xl text-brandBlue card-editable-text" contenteditable="false">Private Villas</p>
+                    <p id="title-card-3" class="font-serif text-2xl text-brandBlue">Excursions</p>
                     <div class="h-[1px] w-10 bg-brandPink/30"></div>
                 </div>
-                <p id="subtitle-card-3" class="text-[11px] uppercase tracking-widest text-brandPink mt-2 font-medium card-editable-text" contenteditable="false">Ultimate Privacy</p>
+                <p id="subtitle-card-3" class="text-[12px] text-gray-600 leading-relaxed mt-3 font-medium">Marine Adventures — Custom snorkeling guides, dynamic sandbank retreats, sunset sails, and pristine whale shark encounters.</p>
             </div>
 
-            <!-- Experience Card 4 -->
-            <div class="destination-card snap-center group cursor-pointer" data-id="card-4">
-                <div class="card-image-wrapper">
-                    <img id="img-card-4" src="https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?auto=format&fit=crop&w=800&q=80" alt="Ocean Excursions Maldives" class="card-img">
-                    <!-- Upload Overlay -->
-                    <div class="upload-overlay absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center pointer-events-none">
-                        <i class="fa-solid fa-camera text-2xl mb-2 text-brandPink"></i>
-                        <span class="text-[10px] uppercase tracking-widest font-bold">Replace Image</span>
-                        <span class="text-[9px] text-petal/90 mt-1 font-semibold bg-brandBlue/50 px-2 py-1 rounded">Size: 800 × 1000px</span>
-                    </div>
-                    <!-- Hidden File Input -->
-                    <input type="file" id="file-card-4" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer hidden z-10">
-                </div>
-                <div class="mt-8 flex justify-between items-center">
-                    <p id="title-card-4" class="font-serif text-2xl text-brandBlue card-editable-text" contenteditable="false">Ocean Excursions</p>
-                    <div class="h-[1px] w-10 bg-brandPink/30"></div>
-                </div>
-                <p id="subtitle-card-4" class="text-[11px] uppercase tracking-widest text-brandPink mt-2 font-medium card-editable-text" contenteditable="false">Marine Adventures</p>
-            </div>
-
-            <!-- Experience Card 5 -->
-            <div class="destination-card snap-center group cursor-pointer" data-id="card-5">
-                <div class="card-image-wrapper">
-                    <img id="img-card-5" src="https://images.unsplash.com/photo-1583416750470-965b2707b355?auto=format&fit=crop&w=800&q=80" alt="Wellness Retreats Maldives" class="card-img">
-                    <!-- Upload Overlay -->
-                    <div class="upload-overlay absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center pointer-events-none">
-                        <i class="fa-solid fa-camera text-2xl mb-2 text-brandPink"></i>
-                        <span class="text-[10px] uppercase tracking-widest font-bold">Replace Image</span>
-                        <span class="text-[9px] text-petal/90 mt-1 font-semibold bg-brandBlue/50 px-2 py-1 rounded">Size: 800 × 1000px</span>
-                    </div>
-                    <!-- Hidden File Input -->
-                    <input type="file" id="file-card-5" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer hidden z-10">
-                </div>
-                <div class="mt-8 flex justify-between items-center">
-                    <p id="title-card-5" class="font-serif text-2xl text-brandBlue card-editable-text" contenteditable="false">Wellness Retreats</p>
-                    <div class="h-[1px] w-10 bg-brandPink/30"></div>
-                </div>
-                <p id="subtitle-card-5" class="text-[11px] uppercase tracking-widest text-brandPink mt-2 font-medium card-editable-text" contenteditable="false">Island Rejuvenation</p>
-            </div>
         </div>
     </section>
 
@@ -418,261 +322,55 @@
         <p class="footer-text">&copy; 2026 HUDY Travels &bull; Bespoke Maldives Curations</p>
     </footer>
 
-    <!-- CODE EXPORT MODAL -->
-    <div id="export-modal" class="fixed inset-0 bg-brandBlue/60 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-[2rem] max-w-2xl w-full mx-4 p-8 md:p-10 shadow-2xl border border-petal relative transform scale-95 transition-transform duration-300">
-            <button id="close-modal-btn" class="absolute top-6 right-6 text-brandBlue/60 hover:text-brandPink text-xl p-2 transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 rounded-full bg-petal text-brandPink flex items-center justify-center text-3xl mx-auto mb-4">
-                    <i class="fa-solid fa-code-commit"></i>
-                </div>
-                <h4 class="font-serif text-3xl text-brandBlue">Bespoke Code Generated</h4>
-                <p class="text-xs text-gray-400 mt-2 uppercase tracking-widest font-semibold">Your edits are baked in!</p>
-            </div>
-
-            <p class="text-sm text-gray-500 font-light mb-6 text-center leading-relaxed">
-                All custom text changes and uploaded photos (perfectly compiled into clean inline code) are embedded directly within this page. Grab your production code below:
-            </p>
-
-            <div class="bg-petal/30 p-4 rounded-xl border border-petal mb-6 relative">
-                <textarea id="code-textarea" readonly class="w-full h-48 bg-transparent text-[11px] font-mono text-brandBlue focus:outline-none resize-none no-scrollbar"></textarea>
-                <div class="absolute bottom-2 right-2 text-[9px] uppercase font-bold text-brandPink tracking-wider bg-white/95 px-2 py-1 rounded shadow-sm border border-petal">
-                    Full HTML Document
-                </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button id="copy-code-btn" class="flex-1 btn-inquire !py-4 text-center justify-center flex items-center gap-2 shadow-md">
-                    <i class="fa-solid fa-copy"></i>
-                    <span>Copy Code</span>
-                </button>
-                <button id="download-code-btn" class="flex-1 bg-brandBlue hover:bg-brandPink text-white py-4 rounded-full text-xs uppercase tracking-widest font-bold transition flex items-center justify-center gap-2 shadow-md">
-                    <i class="fa-solid fa-circle-down"></i>
-                    <span>Download File</span>
-                </button>
-            </div>
-            
-            <div id="copy-success-toast" class="hidden text-center text-green-500 font-semibold text-xs mt-4 uppercase tracking-widest animate-bounce">
-                <i class="fa-solid fa-check"></i> Copied to Clipboard!
-            </div>
-        </div>
-    </div>
-
-    <!-- Interactive Navigation, Media Customization, & Persistent Code Engine -->
+    <!-- Interactive Navigation & Persistent Data Loader -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- MENU NAVIGATION DRAWER ---
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('translate-x-full');
-            });
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-x-full');
+                });
+            }
 
             const closeMenu = () => {
-                mobileMenu.classList.add('translate-x-full');
+                if (mobileMenu) {
+                    mobileMenu.classList.add('translate-x-full');
+                }
             };
 
-            mobileMenuClose.addEventListener('click', closeMenu);
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', closeMenu);
+            }
             mobileLinks.forEach(link => {
                 link.addEventListener('click', closeMenu);
             });
 
-            // --- CURATOR MODE ENGINE ---
-            const toggleCuratorBtn = document.getElementById('toggle-curator-mode');
-            const exportCodeBtn = document.getElementById('export-code-btn');
-            const carouselContainer = document.getElementById('carousel-container');
-            const editableTextElements = document.querySelectorAll('.card-editable-text');
-            const uploadInputs = document.querySelectorAll('input[type="file"]');
-            let isCuratorModeActive = false;
-
-            // Load saved content from LocalStorage (if any exists) for local session persistence
             const loadCustomContent = () => {
-                const cardCount = 5;
+                const cardCount = 3;
                 for (let i = 1; i <= cardCount; i++) {
-                    // Load Images
                     const savedImg = localStorage.getItem(`custom-img-card-${i}`);
-                    if (savedImg) {
-                        document.getElementById(`img-card-${i}`).src = savedImg;
-                        exportCodeBtn.classList.remove('hidden');
+                    const targetImg = document.getElementById(`img-card-${i}`);
+                    if (savedImg && targetImg) {
+                        targetImg.src = savedImg;
                     }
-                    // Load Titles
                     const savedTitle = localStorage.getItem(`custom-title-card-${i}`);
-                    if (savedTitle) {
-                        document.getElementById(`title-card-${i}`).innerText = savedTitle;
-                        exportCodeBtn.classList.remove('hidden');
+                    const targetTitle = document.getElementById(`title-card-${i}`);
+                    if (savedTitle && targetTitle) {
+                        targetTitle.innerText = savedTitle;
                     }
-                    // Load Subtitles
                     const savedSubtitle = localStorage.getItem(`custom-subtitle-card-${i}`);
-                    if (savedSubtitle) {
-                        document.getElementById(`subtitle-card-${i}`).innerText = savedSubtitle;
-                        exportCodeBtn.classList.remove('hidden');
+                    const targetSubtitle = document.getElementById(`subtitle-card-${i}`);
+                    if (savedSubtitle && targetSubtitle) {
+                        targetSubtitle.innerText = savedSubtitle;
                     }
                 }
             };
 
             loadCustomContent();
-
-            // Toggle Edit Capabilities
-            toggleCuratorBtn.addEventListener('click', () => {
-                isCuratorModeActive = !isCuratorModeActive;
-                
-                if (isCuratorModeActive) {
-                    // Activate Editor Mode styling & attributes
-                    carouselContainer.classList.add('curator-active');
-                    toggleCuratorBtn.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i> <span class="text-green-600">Save Session</span>';
-                    exportCodeBtn.classList.remove('hidden');
-                    
-                    // Enable content editing
-                    editableTextElements.forEach(elem => {
-                        elem.setAttribute('contenteditable', 'true');
-                    });
-
-                    // Reveal inputs overlay & un-hide file selectors
-                    uploadInputs.forEach(input => {
-                        input.classList.remove('hidden');
-                    });
-                } else {
-                    // Deactivate Editor Mode styling & attributes
-                    carouselContainer.classList.remove('curator-active');
-                    toggleCuratorBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles text-brandPink"></i> <span>Curate Collection</span>';
-                    
-                    // Disable content editing
-                    editableTextElements.forEach(elem => {
-                        elem.setAttribute('contenteditable', 'false');
-                        // Save edited writing to localStorage
-                        localStorage.setItem(`custom-${elem.id}`, elem.innerText.trim());
-                    });
-
-                    // Hide file selectors
-                    uploadInputs.forEach(input => {
-                        input.classList.add('hidden');
-                    });
-                }
-            });
-
-            // Handle Local Image Uploads
-            uploadInputs.forEach(input => {
-                input.addEventListener('change', function(event) {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        const targetImgId = this.id.replace('file-', 'img-');
-                        
-                        reader.onload = function(e) {
-                            // Update UI immediately
-                            document.getElementById(targetImgId).src = e.target.result;
-                            
-                            // Save to local storage for persistence
-                            try {
-                                localStorage.setItem(`custom-${targetImgId}`, e.target.result);
-                            } catch (error) {
-                                console.warn("Local storage capacity limit bypassed. Dynamic exporting will still function flawlessly.");
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            });
-
-            // --- STREAMING_CHUNK: Code Compilation and Export Handler... ---
-            // EXPORT CODE SYSTEM
-            const exportModal = document.getElementById('export-modal');
-            const codeTextarea = document.getElementById('code-textarea');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-            const copyCodeBtn = document.getElementById('copy-code-btn');
-            const downloadCodeBtn = document.getElementById('download-code-btn');
-            const toast = document.getElementById('copy-success-toast');
-
-            const getCleanHTMLCode = () => {
-                // Clone current document to avoid changing live DOM
-                const docClone = document.documentElement.cloneNode(true);
-
-                // Clean up state elements inside clone
-                const clonedCarousel = docClone.querySelector('#carousel-container');
-                clonedCarousel.classList.remove('curator-active');
-
-                // Make sure elements aren't showing as editable in raw production file
-                const clonedEditableTexts = docClone.querySelectorAll('.card-editable-text');
-                clonedEditableTexts.forEach(elem => {
-                    elem.setAttribute('contenteditable', 'false');
-                });
-
-                // Re-hide file input tags
-                const clonedFileInputs = docClone.querySelectorAll('input[type="file"]');
-                clonedFileInputs.forEach(input => {
-                    input.classList.add('hidden');
-                });
-
-                // Reset the curator trigger button text
-                const clonedCuratorBtn = docClone.querySelector('#toggle-curator-mode');
-                clonedCuratorBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles text-brandPink"></i> <span>Curate Collection</span>';
-
-                // Hide the export panel triggers inside exported production artifact
-                const clonedExportBtn = docClone.querySelector('#export-code-btn');
-                if (clonedExportBtn) {
-                    clonedExportBtn.classList.add('hidden');
-                }
-
-                // Remove the modal code panel itself from the cloned code
-                const clonedModal = docClone.querySelector('#export-modal');
-                if (clonedModal) clonedModal.remove();
-
-                return '<!DOCTYPE html>\n' + docClone.outerHTML;
-            };
-
-            exportCodeBtn.addEventListener('click', () => {
-                const generatedCode = getCleanHTMLCode();
-                codeTextarea.value = generatedCode;
-
-                // Show Modal
-                exportModal.classList.remove('hidden');
-                setTimeout(() => {
-                    exportModal.classList.remove('opacity-0');
-                    exportModal.querySelector('div').classList.remove('scale-95');
-                }, 50);
-            });
-
-            const hideModal = () => {
-                exportModal.classList.add('opacity-0');
-                exportModal.querySelector('div').classList.add('scale-95');
-                setTimeout(() => {
-                    exportModal.classList.add('hidden');
-                    toast.classList.add('hidden');
-                }, 300);
-            };
-
-            closeModalBtn.addEventListener('click', hideModal);
-
-            // Copy Action
-            copyCodeBtn.addEventListener('click', () => {
-                codeTextarea.select();
-                document.execCommand('copy');
-                
-                toast.classList.remove('hidden');
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 2500);
-            });
-
-            // Download Action
-            downloadCodeBtn.addEventListener('click', () => {
-                const generatedCode = getCleanHTMLCode();
-                const blob = new Blob([generatedCode], { type: 'text/html' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'hudy-travels-maldives.html';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            });
         });
     </script>
 
